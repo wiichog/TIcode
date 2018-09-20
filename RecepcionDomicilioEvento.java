@@ -10,9 +10,20 @@ import java.util.concurrent.TimeoutException;
 
 
 
-public class RecepcionDomicilioEvento {
+public class RecepcionDomicilioEvento implements Runnable {
     private final static String QUEUE_NAME = "hello";
     private Pedido pedido;
+    
+    @Override
+    public void run() {
+        try {
+            tramitarPedido();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public RecepcionDomicilioEvento(Pedido pedido){
         this.pedido = pedido;
     }
