@@ -20,6 +20,11 @@ def sendMessages(messages):
 
 
 def pedir_pedido():
+    ok_nombre, ok_nit, ok_ubicacion = False, False, False
+    ok_pedido, ok_cantidad, ok_precio = False, False, False
+    print('#=====================#')
+    print('|      ORDENAR        |')
+    print('#=====================#')
     pedidos = []
     cantidades = []
     precios = []
@@ -27,13 +32,22 @@ def pedir_pedido():
     total = 0
     terminar_ordenar = False
     while not terminar_ordenar:
-        pedido = input('que desea ordenar?: ')
-        cantidad = int(input('Cuantos desea ordenar?: '))
-        precio = float(input('ingrese precio: Q'))
+        while not ok_pedido:
+            pedido = input('que desea ordenar?: ')
+            if len(pedido)>0:
+                ok_pedido = True
+        while not ok_cantidad:
+            cantidad = input('Cuantos desea ordenar?: ')
+            if len(cantidad)>0:
+                ok_cantidad = True
+        while not ok_precio:
+            precio = input('ingrese precio: Q')
+            if len(precio)>0:
+                ok_precio = True            
         terminar = input('desea agregar algo mas?: (s/n)')
         pedidos.append(pedido)
-        cantidades.append(cantidad)
-        precios.append(precio)
+        cantidades.append(int(cantidad))
+        precios.append(float(precio))
 
         if terminar != 's':
             terminar_ordenar = True
@@ -46,9 +60,19 @@ def pedir_pedido():
     for i in range(len(precios)):
         total = total + (precios[i] * cantidades[i])
 
-    nombre = input('ingrese nombre: ')
-    nit = input('ingrese nit: ')
-    ubicacion = input('ingrese ubicacion: ')
+    while not ok_nombre:
+        nombre = input('ingrese nombre: ')
+        if len(nombre) > 0:
+            ok_nombre = True
+    while not ok_nit:
+        nit = input('ingrese nit: ')
+        if len(nit) > 0:
+            ok_nit = True
+    while not ok_ubicacion:
+        ubicacion = input('ingrese ubicacion: ')
+        if len(ubicacion)>0:
+            ok_ubicacion = True
+
 
     resumen_orden = respuesta_pedido(nit, nombre, pedidios_finales, total)
 
@@ -73,24 +97,30 @@ def revisar_pedido(ID):
     }
     return message
 
+
 def main_menu():
     show = True
     while show:
+        print('#=====================#')
+        print('|    MENU PRINCIPAL   |')
+        print('#=====================#')
+        print('*escoja el numero para ingresar*')
         opcion = input(
-            "que desea hacer?\n1.enviar pedido\n2.verificar orden\n3.salir\n>>")
+            "\nque desea hacer?\n1.enviar pedido\n2.verificar orden\n3.salir\n>>")
         if opcion == '1':
             pedido = pedir_pedido()
             print(pedido)
             # sendMessages(pedidos)
             print("ok")
         elif opcion == '2':
-            uid = input("Ingrese ID de la orden: ")
+            uid = input("Ingrese ID de la orden:\n>>")
             order_check = revisar_pedido(uid)
             print(order_check)
             # sendMessages(order_check)
             print("ok")
         else:
             show = False
+            print('opcion no valida')
     print("adios")
 
 main_menu()
