@@ -1,19 +1,17 @@
-#import pika
-#import sys
-#import json
+import pika
+import sys
+import json
 
 
 def sendMessages(messages):
     connection = pika.BlockingConnection(
-        pika.ConnectionParameters(host='rabbitmq'))
+        pika.ConnectionParameters(host='localhost'))
     channel = connection.channel()
-
-    channel.exchange_declare(exchange='events',
-                             exchange_type='fanout')
+    channel.queue_declare(queue='com')
 
     for message in messages:
-        channel.basic_publish(exchange='events',
-                              routing_key='',
+        channel.basic_publish(exchange='',
+                              routing_key='com',
                               body=json.dumps(message))
     print(" [x] Sent %r" % message)
     connection.close()
@@ -33,18 +31,18 @@ def pedir_pedido():
     terminar_ordenar = False
     while not terminar_ordenar:
         while not ok_pedido:
-            pedido = input('que desea ordenar?: ')
+            pedido = raw_input('que desea ordenar?: ')
             if len(pedido)>0:
                 ok_pedido = True
         while not ok_cantidad:
-            cantidad = input('Cuantos desea ordenar?: ')
+            cantidad = str(input('Cuantos desea ordenar?: '))
             if len(cantidad)>0:
                 ok_cantidad = True
         while not ok_precio:
-            precio = input('ingrese precio: Q')
+            precio = str(input('ingrese precio: Q'))
             if len(precio)>0:
                 ok_precio = True            
-        terminar = input('desea agregar algo mas?: (s/n)')
+        terminar = raw_input('desea agregar algo mas?: (s/n)')
         pedidos.append(pedido)
         cantidades.append(int(cantidad))
         precios.append(float(precio))
@@ -61,15 +59,15 @@ def pedir_pedido():
         total = total + (precios[i] * cantidades[i])
 
     while not ok_nombre:
-        nombre = input('ingrese nombre: ')
+        nombre = raw_input('ingrese nombre: ')
         if len(nombre) > 0:
             ok_nombre = True
     while not ok_nit:
-        nit = input('ingrese nit: ')
+        nit = str(raw_input('ingrese nit: '))
         if len(nit) > 0:
             ok_nit = True
     while not ok_ubicacion:
-        ubicacion = input('ingrese ubicacion: ')
+        ubicacion = raw_input('ingrese ubicacion: ')
         if len(ubicacion)>0:
             ok_ubicacion = True
 
@@ -107,17 +105,17 @@ def main_menu():
         print('*escoja el numero para ingresar*')
         opcion = input(
             "\nque desea hacer?\n1.enviar pedido\n2.verificar orden\n3.salir\n>>")
-        if opcion == '1':
+        if opcion == 1:
             pedido = pedir_pedido()
             print(pedido)
-            # sendMessages(pedidos)
-            print("ok")
-        elif opcion == '2':
+            sendMessages(pedidos)
+            print("Orden Recibida")
+        elif opcion == 2:
             uid = input("Ingrese ID de la orden:\n>>")
             order_check = revisar_pedido(uid)
             print(order_check)
-            # sendMessages(order_check)
-            print("ok")
+            sendMessages(order_check)
+            print("Status: Ok")
         else:
             show = False
             print('opcion no valida')
