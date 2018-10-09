@@ -119,15 +119,17 @@ def main_menu():
         print('|    MENU PRINCIPAL   |')
         print('#=====================#')
         print('*escoja el numero para ingresar*')
-        opcion = input(
-            "\nque desea hacer?\n1.enviar pedido\n2.verificar orden\n3.salir\n>>")
+        #opcion = input(
+        #    "\nque desea hacer?\n1.enviar pedido\n2.verificar orden\n3.salir\n>>")
+        opcion = 2
         if opcion == 1:
             pedido = pedir_pedido()
             print(pedido)
             sendMessages(pedido)
             print("Orden Recibida")
         elif opcion == 2:
-            uid = input("Ingrese ID de la orden:\n>>")
+            #uid = input("Ingrese ID de la orden:\n>>")
+            uid = 123
             order_check = revisar_pedido(uid)
             print(order_check)
             sendMessages(order_check)
