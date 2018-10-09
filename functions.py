@@ -76,6 +76,7 @@ def pedir_pedido():
 
     return resumen_orden
 
+# test_respuesta_pedido.py
 
 def respuesta_pedido(NIT, NOMBRE, PRODS, TOTAL):
     respuesta = {
@@ -87,6 +88,10 @@ def respuesta_pedido(NIT, NOMBRE, PRODS, TOTAL):
     }
     return respuesta
 
+def test_respuesta_pedido():
+    assert respuesta_pedido('1234','Juan',[{'product':'test','quantity':1}],'1.0') == {'customer': 'Juan', 'products': [{'product': 'test', 'quantity': 1}], 'total': 1.0, 'type': 'web-create-order', 'nit': '1234'}
+
+#test_revisar_pedido.py
 
 def revisar_pedido(ID):
     message = {
@@ -95,6 +100,8 @@ def revisar_pedido(ID):
     }
     return message
 
+def test_revisar_pedido():
+    assert revisar_pedido(123) == {'type': 'web-check-order-status', 'order-id': 123}
 
 def main_menu():
     show = True
@@ -108,7 +115,7 @@ def main_menu():
         if opcion == 1:
             pedido = pedir_pedido()
             print(pedido)
-            sendMessages(pedidos)
+            sendMessages(pedido)
             print("Orden Recibida")
         elif opcion == 2:
             uid = input("Ingrese ID de la orden:\n>>")
@@ -121,5 +128,4 @@ def main_menu():
             print('opcion no valida')
     print("adios")
 
-def test_main_menu():
-    main_menu()
+main_menu()
