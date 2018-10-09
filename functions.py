@@ -4,18 +4,24 @@ import json
 
 
 def sendMessages(messages):
-    connection = pika.BlockingConnection(
-        pika.ConnectionParameters(host='localhost'))
-    channel = connection.channel()
-    channel.queue_declare(queue='com')
+    try:
+        connection = pika.BlockingConnection(
+            pika.ConnectionParameters(host='hola'))
+        channel = connection.channel()
+        channel.queue_declare(queue='com')
+        
+    except:
+        print('excep')
+        return(False)
 
     for message in messages:
         channel.basic_publish(exchange='',
                               routing_key='com',
                               body=json.dumps(message))
-    print(" [x] Sent %r" % message)
-    connection.close()
 
+    print(" [x] Sent %r" % messages)
+    connection.close()
+    return(True)
 
 def pedir_pedido():
     ok_nombre, ok_nit, ok_ubicacion = False, False, False
@@ -103,6 +109,9 @@ def revisar_pedido(ID):
 def test_revisar_pedido():
     assert revisar_pedido(123) == {'type': 'web-check-order-status', 'order-id': 123}
 
+def test_connection():
+    assert sendMessages({'Conexion establecida'}) == True 
+
 def main_menu():
     show = True
     while show:
@@ -129,3 +138,4 @@ def main_menu():
     print("adios")
 
 main_menu()
+#test_connection()
