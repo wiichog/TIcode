@@ -4,12 +4,14 @@ python:
   - "3.7"
 jobs:
   include:
+    - stage: development
+      install: 
+      - pip install pytest
+      - pip install --upgrade pip
+      script: pytest
+    - stage: tests
+      install: pip install pytest
+      script: pytest
     - stage: stage
-      install: pip install pytest
-      script: pytest
-    - stage: test
-      install: pip install pytest
-      script: pytest
-    - stage: build
       install: pip install pytest
       script: pytest
