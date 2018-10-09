@@ -121,4 +121,5 @@ def main_menu():
             print('opcion no valida')
     print("adios")
 
-main_menu()
+def test_main_menu():
+    main_menu()
