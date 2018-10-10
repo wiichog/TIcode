@@ -8,10 +8,10 @@ jobs:
       install: 
       - pip install pytest
       - pip install --upgrade pip
-      script: pytest
+      script: pytest functions.py
     - stage: tests
       install: pip install pytest
-      script: pytest
+      script: pytest functions.py
     - stage: stage
       install: pip install pytest
-      script: pytest
+      script: pytest functions.py
