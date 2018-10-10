@@ -1,12 +1,12 @@
 import pika
 import sys
 import json
-
+import threading
 
 def sendMessages(messages):
     try:
         connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host='hola'))
+            pika.ConnectionParameters(host='localhost'))
         channel = connection.channel()
         channel.queue_declare(queue='com')
         
@@ -94,6 +94,10 @@ def respuesta_pedido(NIT, NOMBRE, PRODS, TOTAL):
     }
     return respuesta
 
+def realizar_operacion(NIT, NOMBRE, PRODS, TOTAL):
+    mensaje = respuesta_pedido(NIT, NOMBRE, PRODS, TOTAL)
+    sendMessages([mensaje])
+
 def test_respuesta_pedido():
     assert respuesta_pedido('1234','Juan',[{'product':'test','quantity':1}],'1.0') == {'customer': 'Juan', 'products': [{'product': 'test', 'quantity': 1}], 'total': 1.0, 'type': 'web-create-order', 'nit': '1234'}
 
@@ -111,6 +115,18 @@ def test_revisar_pedido():
 
 def test_connection():
     assert sendMessages({'Conexion establecida'}) == True 
+
+def test_stress():
+    n = 7
+    while(n>0):
+        thread1 = threading.Thread(target=realizar_operacion, args=('1234','Juan',[{'product':'test','quantity':1}],'1.0'))
+        thread1.start()
+
+        n-=1
+    while( thread1.isAlive()):
+        n = 0
+    assert thread1.isAlive() == False
+        
 
 def main_menu():
     show = True
@@ -137,5 +153,6 @@ def main_menu():
             print('opcion no valida')
     print("adios")
 
-main_menu()
+#main_menu()
 #test_connection()
+test_stress()
