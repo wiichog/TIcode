@@ -55,6 +55,8 @@ def pedir_pedido():
 
         if terminar != 's':
             terminar_ordenar = True
+        ok_pedido, ok_cantidad, ok_precio = False, False, False
+
     for i in range(len(pedidos)):
         temp = {
             "product": pedidos[i],
