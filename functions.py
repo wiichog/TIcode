@@ -55,6 +55,8 @@ def pedir_pedido():
 
         if terminar != 's':
             terminar_ordenar = True
+        ok_pedido, ok_cantidad, ok_precio = False, False, False
+
     for i in range(len(pedidos)):
         temp = {
             "product": pedidos[i],
@@ -129,29 +131,7 @@ def test_stress():
         
 
 def main_menu():
-    show = True
-    while show:
-        print('#=====================#')
-        print('|    MENU PRINCIPAL   |')
-        print('#=====================#')
-        print('*escoja el numero para ingresar*')
-        opcion = input(
-            "\nque desea hacer?\n1.enviar pedido\n2.verificar orden\n3.salir\n>>")
-        if opcion == 1:
-            pedido = pedir_pedido()
-            print(pedido)
-            sendMessages(pedido)
-            print("Orden Recibida")
-        elif opcion == 2:
-            uid = input("Ingrese ID de la orden:\n>>")
-            order_check = revisar_pedido(uid)
-            print(order_check)
-            sendMessages(order_check)
-            print("Status: Ok")
-        else:
-            show = False
-            print('opcion no valida')
-    print("adios")
+    test_revisar_pedido()
 
 #main_menu()
 #test_connection()
