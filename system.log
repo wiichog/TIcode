@@ -1,0 +1,21 @@
+Info   : id: dd32383e-d148-11e8-bcb1-48e24421f5bc : asaasa on 2018-10-16 07:39:11,375 
+Start  : id: dd32f806-d148-11e8-ae85-48e24421f5bc : asaasa on 2018-10-16 07:39:11,375 
+Finish : id: dd32f807-d148-11e8-90aa-48e24421f5bc : asaasa on 2018-10-16 07:39:11,375 
+Info   : id: dd32f808-d148-11e8-8900-48e24421f5bc : asaasa on 2018-10-16 07:39:11,375 
+Error  : id: dd32f809-d148-11e8-86ed-48e24421f5bc : asaasa on 2018-10-16 07:39:11,375 
+Info   : id: dd331e36-d148-11e8-a238-48e24421f5bc : asaasa on 2018-10-16 07:39:11,376 
+Info   : id: c9d3741a-d19c-11e8-ab7a-48e24421f5bc : started software on 2018-10-16 17:39:56,598 
+Info   : id: c9d3741b-d19c-11e8-a2f9-48e24421f5bc : Running Menu on 2018-10-16 17:39:56,598 
+Start  : id: c9d3741b-d19c-11e8-a2f9-48e24421f5bc : ordenar pedido on 2018-10-16 17:40:00,216 
+Info   : id: cbfbaa7e-d19c-11e8-b825-48e24421f5bc : started Order on 2018-10-16 17:40:00,217 
+Info   : id: cbfbaa7e-d19c-11e8-b825-48e24421f5bc : end order on 2018-10-16 17:40:13,071 
+Finish : id: c9d3741b-d19c-11e8-a2f9-48e24421f5bc : ordenar pedido on 2018-10-16 17:40:13,071 
+Info   : id: d3a525e8-d19c-11e8-aeec-48e24421f5bc : Running Menu on 2018-10-16 17:40:13,071 
+Start  : id: d3a525e8-d19c-11e8-aeec-48e24421f5bc : verificar pedido on 2018-10-16 17:40:15,952 
+Finish : id: d3a525e8-d19c-11e8-aeec-48e24421f5bc : verificar pedido on 2018-10-16 17:40:19,558 
+Info   : id: d782dfe6-d19c-11e8-91ab-48e24421f5bc : Running Menu on 2018-10-16 17:40:19,558 
+Start  : id: d782dfe6-d19c-11e8-91ab-48e24421f5bc : query chosed on 2018-10-16 17:40:24,885 
+Finish : id: d782dfe6-d19c-11e8-91ab-48e24421f5bc : query  on 2018-10-16 17:40:47,092 
+Info   : id: e7ec7e08-d19c-11e8-ad16-48e24421f5bc : Running Menu on 2018-10-16 17:40:47,093 
+Warning: id: e7ec7e08-d19c-11e8-ad16-48e24421f5bc : opcion no valida on 2018-10-16 17:41:10,775 
+Info   : id: c9d3741a-d19c-11e8-ab7a-48e24421f5bc : finnished software on 2018-10-16 17:41:10,775 

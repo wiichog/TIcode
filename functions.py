@@ -1,7 +1,7 @@
 import pika
 import sys
 import json
-import threading
+import logger
 
 
 def sendMessages(messages):
@@ -25,7 +25,8 @@ def sendMessages(messages):
     return(True)
 
 def pedir_pedido():
-
+    startId = logger.genID()
+    logger.writeLog(1,'started Order',startId)
     ok_nombre, ok_nit, ok_ubicacion = False, False, False
     ok_pedido, ok_cantidad, ok_precio = False, False, False
     print('#=====================#')
@@ -39,7 +40,7 @@ def pedir_pedido():
     terminar_ordenar = False
     while not terminar_ordenar:
         while not ok_pedido:
-            pedido = raw_input('que desea ordenar?: ')
+            pedido = input('que desea ordenar?: ')
             if len(pedido)>0:
                 ok_pedido = True
         while not ok_cantidad:
@@ -50,7 +51,7 @@ def pedir_pedido():
             precio = str(input('ingrese precio: Q'))
             if len(precio)>0:
                 ok_precio = True            
-        terminar = raw_input('desea agregar algo mas?: (s/n)')
+        terminar = input('desea agregar algo mas?: (s/n)')
         pedidos.append(pedido)
         cantidades.append(int(cantidad))
         precios.append(float(precio))
@@ -69,20 +70,21 @@ def pedir_pedido():
         total = total + (precios[i] * cantidades[i])
 
     while not ok_nombre:
-        nombre = raw_input('ingrese nombre: ')
+        nombre = input('ingrese nombre: ')
         if len(nombre) > 0:
             ok_nombre = True
     while not ok_nit:
-        nit = str(raw_input('ingrese nit: '))
+        nit = str(input('ingrese nit: '))
         if len(nit) > 0:
             ok_nit = True
     while not ok_ubicacion:
-        ubicacion = raw_input('ingrese ubicacion: ')
+        ubicacion = input('ingrese ubicacion: ')
         if len(ubicacion)>0:
             ok_ubicacion = True
 
-    pedido(total,cantidades, pedidios_finales)
+
     resumen_orden = respuesta_pedido(nit, nombre, pedidios_finales, total)
+    logger.writeLog(1,'end order',startId)
 
     return resumen_orden
 
@@ -97,10 +99,6 @@ def respuesta_pedido(NIT, NOMBRE, PRODS, TOTAL):
         "total": TOTAL
     }
     return respuesta
-
-def realizar_operacion(NIT, NOMBRE, PRODS, TOTAL):
-    mensaje = respuesta_pedido(NIT, NOMBRE, PRODS, TOTAL)
-    sendMessages([mensaje])
 
 def test_respuesta_pedido():
     assert respuesta_pedido('1234','Juan',[{'product':'test','quantity':1}],'1.0') == {'customer': 'Juan', 'products': [{'product': 'test', 'quantity': 1}], 'total': 1.0, 'type': 'web-create-order', 'nit': '1234'}
@@ -120,22 +118,45 @@ def test_revisar_pedido():
 def test_connection():
     assert sendMessages({'Conexion establecida'}) == True 
 
-def test_stress():
-    n = 7
-    while(n>0):
-        thread1 = threading.Thread(target=realizar_operacion, args=('1234','Juan',[{'product':'test','quantity':1}],'1.0'))
-        thread1.start()
-
-        n-=1
-    while( thread1.isAlive()):
-        n = 0
-    assert thread1.isAlive() == False
-        
-
 def main_menu():
-
-    pedir_pedido()
+    startId = logger.genID()
+    logger.writeLog(1,'started software',startId)
+    show = True
+    while show:
+        transaction = logger.genID()
+        logger.writeLog(1, 'Running Menu', transaction)
+        print('#=====================#')
+        print('|    MENU PRINCIPAL   |')
+        print('#=====================#')
+        print('*escoja el numero para ingresar*')
+        opcion = input(
+            "\nque desea hacer?\n1.enviar pedido\n2.verificar orden\n3.query\n4.salir\n>>")
+        if opcion == '1':
+            logger.writeLog(2,'ordenar pedido', transaction)
+            pedido = pedir_pedido()
+            print(pedido)
+            sendMessages(pedido)
+            print("ok")
+            logger.writeLog(3,'ordenar pedido', transaction)
+        elif opcion == '2':
+            logger.writeLog(2,'verificar pedido', transaction)
+            uid = input("Ingrese ID de la orden:\n>>")
+            order_check = revisar_pedido(uid)
+            print(order_check)
+            sendMessages(order_check)
+            print("ok")
+            logger.writeLog(3,'verificar pedido', transaction)
+        elif opcion == '3':
+            logger.writeLog(2,'query chosed', transaction)
+            seekfor = input('ingrese algo a buscar:\n>>')
+            logger.queryLog(seekfor)
+            print('resultado escrito')
+            logger.writeLog(3,'query ', transaction)
+        else:
+            show = False
+            print('opcion no valida')
+            logger.writeLog(0, 'opcion no valida', transaction)
+    print("adios")
+    logger.writeLog(1,'finnished software',startId)
 
 main_menu()
-#test_connection()
-#test_stress()
