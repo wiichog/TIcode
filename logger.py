@@ -44,4 +44,4 @@ writeLog(1, 'asaasa', genID())
 writeLog(4, 'asaasa', genID())
 writeLog(1, 'asaasa', genID()) """
   
-queryLog('74d6a7c2-d10a-11e8-8a34-48e24421f5bc')
+queryLog('6e8f2ea5-d18b-11e8-9e13-4c3488d6805d')

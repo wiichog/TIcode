@@ -3,6 +3,7 @@ import sys
 import json
 import threading
 
+
 def sendMessages(messages):
     try:
         connection = pika.BlockingConnection(
@@ -24,6 +25,7 @@ def sendMessages(messages):
     return(True)
 
 def pedir_pedido():
+
     ok_nombre, ok_nit, ok_ubicacion = False, False, False
     ok_pedido, ok_cantidad, ok_precio = False, False, False
     print('#=====================#')
@@ -79,7 +81,7 @@ def pedir_pedido():
         if len(ubicacion)>0:
             ok_ubicacion = True
 
-
+    pedido(total,cantidades, pedidios_finales)
     resumen_orden = respuesta_pedido(nit, nombre, pedidios_finales, total)
 
     return resumen_orden
@@ -131,8 +133,9 @@ def test_stress():
         
 
 def main_menu():
-    test_revisar_pedido()
 
-#main_menu()
+    pedir_pedido()
+
+main_menu()
 #test_connection()
-test_stress()
+#test_stress()
